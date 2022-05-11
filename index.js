@@ -190,15 +190,15 @@ class Action {
 					res.on("data", (chunk) => (body += chunk));
 					res.on("end", () => {
 						const content = JSON.parse(body);
-						console.log("Content --- ", content);
 
 						let found = false;
 						content.data.forEach((p) => {
-							if (p.title === this.packageName) {
-								if (p.versions.some((v) => v == this.version)) {
-									found = true;
-									return;
-								}
+							if (
+								p.title === this.packageName &&
+								p.versions.some((v) => v == this.version)
+							) {
+								found = true;
+								return;
 							}
 						});
 
