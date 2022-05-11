@@ -128,7 +128,7 @@ class Action {
         
         https.get(requestOptions, res => {
             let body = ""
-            console.log(res)
+            console.log(requestOptions)
              console.log(res.statusCode)
             if (res.statusCode == 404)
                 this._pushPackage(this.version, this.packageName)
