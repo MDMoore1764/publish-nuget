@@ -190,12 +190,21 @@ class Action {
 					res.on("data", (chunk) => (body += chunk));
 					res.on("end", () => {
 						const json = JSON.parse(body);
-						const packageID = `${this.packageName}/${this.version}`;
+						let found = false;
+						for (let package in json) {
+							if (package.title === this.packageName) {
+								if (package.versions.contains(this.version)) {
+									found = true;
+									break;
+								}
+								break;
+							}
+						}
+
 						console.log(json);
 						console.log(packageID);
 
-						if (json.indexOf(packageID) < 0)
-							this._pushPackage(this.version, this.packageName);
+						if (!found) this._pushPackage(this.version, this.packageName);
 					});
 				}
 			})
