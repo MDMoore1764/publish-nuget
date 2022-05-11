@@ -62,7 +62,7 @@ jobs:
           # NUGET_SOURCE: github
           
           # NuGet server uri hosting used to retrieve the package. Defaults to https://api.nuget.org.
-          # NUGET_SOURCE: https://nuget.pkg.github.com/.../index.json
+          # NUGET_URI: https://nuget.pkg.github.com/.../index.json
 
           # Flag to toggle pushing symbols along with nuget package to the server, disabled by default
           # INCLUDE_SYMBOLS: false
@@ -85,7 +85,7 @@ TAG_COMMIT | `true` | Flag to toggle git tagging, enabled by default
 TAG_FORMAT | `v*` | Format of the git tag, `[*]` gets replaced with actual version
 NUGET_KEY | | API key to authenticate with NuGet server
 NUGET_SOURCE | `https://api.nuget.org` | NuGet server uri hosting the packages, defaults to https://api.nuget.org
-NUGET_Uri |  | NuGet server uri hosting used to retrieve the package. Defaults to https://api.nuget.org.
+NUGET_URI |  | NuGet server uri hosting used to retrieve the package. Defaults to https://api.nuget.org.
 INCLUDE_SYMBOLS | `false` | Flag to toggle pushing symbols along with nuget package to the server, disabled by default
 
 ## Outputs
