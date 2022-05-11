@@ -110,7 +110,7 @@ class Action {
         for (i = 5; i < matches.length - 3; i += 2) {
             if (i < matches.length && matches[i]) urlPath += matches[i];
         }
-        if (i % 2 !== 0 && matches[i - 3]) urlPath += "/" + matches.at(-3);
+        if (i % 2 !== 0 && matches[i - 3]) urlPath += "/" + matches.length > 3? matches[matches.length-3] : "";
 
         const auth = `Basic ${Buffer.from(nugetUsername + ":" + nugetKey).toString(
             "base64"
