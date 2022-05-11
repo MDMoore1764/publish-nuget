@@ -195,7 +195,7 @@ class Action {
 						let found = false;
 						content.data.forEach((p) => {
 							if (p.title === this.packageName) {
-								if (p.versions.contains(this.version)) {
+								if (p.versions.includes(this.version)) {
 									found = true;
 									return;
 								}
