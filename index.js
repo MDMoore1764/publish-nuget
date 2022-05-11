@@ -190,6 +190,9 @@ class Action {
 					res.on("data", (chunk) => (body += chunk));
 					res.on("end", () => {
 						const content = JSON.parse(body);
+
+						console.log(content);
+
 						let found = false;
 						content.forEach((p) => {
 							if (p.title === this.packageName) {
@@ -199,9 +202,6 @@ class Action {
 								}
 							}
 						});
-
-						console.log(content);
-						console.log(packageID);
 
 						if (!found) this._pushPackage(this.version, this.packageName);
 					});
