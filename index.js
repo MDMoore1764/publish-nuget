@@ -112,7 +112,7 @@ class Action {
         }
         if (i % 2 !== 0 && matches[i - 3]) urlPath += "/" + matches.length > 3? matches[matches.length-3] : "";
 
-        const auth = `Basic ${Buffer.from(nugetUsername + ":" + nugetKey).toString(
+        const auth = `Basic ${Buffer.from(this.nugetUsername + ":" + this.nugetKey).toString(
             "base64"
         )}`;
 
