@@ -20,6 +20,7 @@ class Action {
         this.nugetUri = process.env.INPUT_NUGET_URI || process.env.NUGET_URI
         this.nuspecFile = process.env.INPUT_NUSPEC_FILE
         this.includeSymbols = JSON.parse(process.env.INPUT_INCLUDE_SYMBOLS || process.env.INCLUDE_SYMBOLS)
+        this.nugetUsername = process.env.INPUT_NUGET_USERNAME || process.env.NUGET_USERNAME
     }
 
     _printErrorAndExit(msg) {
@@ -98,10 +99,37 @@ class Action {
 
         console.log(`Package Name: ${this.packageName}`)
         const nugetUri = this.nugetUri || `${this.nugetSource}/v3-flatcontainer/${this.packageName}/index.json`
+        const urlRegex =
+            /^((http[s]?|ftp):\/)?\/?([^:\/\s]+)((\/\w+)*\/)([\w\-\.]+[^#?\s]+)(.*)?(#[\w\-]+)?$/;
+        const matches = urlRegex.exec(nugetUri);
+        const protocol = `${matches[2]}:`;
+        const hostname = matches[3];
+
+        let path = "";
+        let i;
+        for (i = 5; i < matches.length - 3; i += 2) {
+            if (i < matches.length && matches[i]) path += matches[i];
+        }
+        if (i % 2 !== 0 && matches[i - 3]) path += "/" + matches.at(-3);
+
+        const auth = `Basic ${Buffer.from(nugetUsername + ":" + nugetKey).toString(
+            "base64"
+        )}`;
+
+        const requestOptions = {
+            method: "GET",
+            protocol,
+            hostname,
+            path,
+            headers: {
+                Authorization: auth
+            }
+        };
         
         https.get(nugetUri, res => {
             let body = ""
-
+            console.log(res)
+             console.log(res.statusCode)
             if (res.statusCode == 404)
                 this._pushPackage(this.version, this.packageName)
 
@@ -110,6 +138,10 @@ class Action {
                 res.on("data", chunk => body += chunk)
                 res.on("end", () => {
                     const existingVersions = JSON.parse(body)
+                    
+                    console.log(existingVersions)
+                    console.log(existingVersions.versions.indexOf(this.version))
+                    
                     if (existingVersions.versions.indexOf(this.version) < 0)
                         this._pushPackage(this.version, this.packageName)
                 })
