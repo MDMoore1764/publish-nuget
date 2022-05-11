@@ -191,15 +191,14 @@ class Action {
 					res.on("end", () => {
 						const json = JSON.parse(body);
 						let found = false;
-						for (let package of json) {
+						json.forEach((package) => {
 							if (package.title === this.packageName) {
 								if (package.versions.contains(this.version)) {
 									found = true;
-									break;
+									return;
 								}
-								break;
 							}
-						}
+						});
 
 						console.log(json);
 						console.log(packageID);
