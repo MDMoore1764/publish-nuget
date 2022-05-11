@@ -97,7 +97,7 @@ class Action {
         }
 
         console.log(`Package Name: ${this.packageName}`)
-        const nugetUri = this.nugetUri ?? `${this.nugetSource}/v3-flatcontainer/${this.packageName}/index.json`
+        const nugetUri = this.nugetUri || `${this.nugetSource}/v3-flatcontainer/${this.packageName}/index.json`
         
         https.get(nugetUri, res => {
             let body = ""
