@@ -191,7 +191,7 @@ class Action {
 					res.on("end", () => {
 						const json = JSON.parse(body);
 						let found = false;
-						for (let package in json) {
+						for (let package of json) {
 							if (package.title === this.packageName) {
 								if (package.versions.contains(this.version)) {
 									found = true;
