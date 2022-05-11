@@ -190,8 +190,8 @@ class Action {
 					res.on("data", (chunk) => (body += chunk));
 					res.on("end", () => {
 						const content = JSON.parse(body);
-
-						console.log(content);
+						console.log("body", body);
+						console.log("Content", content);
 
 						let found = false;
 						content.forEach((p) => {
