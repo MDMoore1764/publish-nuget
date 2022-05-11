@@ -49,6 +49,9 @@ inputs:
     NUGET_URI:
         description: NuGet server uri to access packages.
         required: false
+    NUGET_USERNAME:
+        description: NuGet server basic authentication username.
+        required: false
     INCLUDE_SYMBOLS:
         description: Flag to toggle pushing symbols along with nuget package to the server, disabled by default
         required: false
