@@ -17,6 +17,7 @@ class Action {
         this.tagFormat = process.env.INPUT_TAG_FORMAT || process.env.TAG_FORMAT
         this.nugetKey = process.env.INPUT_NUGET_KEY || process.env.NUGET_KEY
         this.nugetSource = process.env.INPUT_NUGET_SOURCE || process.env.NUGET_SOURCE
+        this.nugetUri = process.env.INPUT_NUGET_URI || process.env.NUGET_URI
         this.nuspecFile = process.env.INPUT_NUSPEC_FILE
         this.includeSymbols = JSON.parse(process.env.INPUT_INCLUDE_SYMBOLS || process.env.INCLUDE_SYMBOLS)
     }
@@ -96,8 +97,9 @@ class Action {
         }
 
         console.log(`Package Name: ${this.packageName}`)
-
-        https.get(`${this.nugetSource}/v3-flatcontainer/${this.packageName}/index.json`, res => {
+        const nugetUri = this.nugetUri ?? `${this.nugetSource}/v3-flatcontainer/${this.packageName}/index.json`
+        
+        https.get(nugetUri, res => {
             let body = ""
 
             if (res.statusCode == 404)
