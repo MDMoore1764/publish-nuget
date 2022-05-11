@@ -189,9 +189,9 @@ class Action {
 					res.setEncoding("utf8");
 					res.on("data", (chunk) => (body += chunk));
 					res.on("end", () => {
-						const json = JSON.parse(body);
+						const content = JSON.parse(body);
 						let found = false;
-						json.forEach((package) => {
+						content.forEach((package) => {
 							if (package.title === this.packageName) {
 								if (package.versions.contains(this.version)) {
 									found = true;
@@ -200,7 +200,7 @@ class Action {
 							}
 						});
 
-						console.log(json);
+						console.log(content);
 						console.log(packageID);
 
 						if (!found) this._pushPackage(this.version, this.packageName);
