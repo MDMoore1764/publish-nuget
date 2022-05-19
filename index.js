@@ -180,8 +180,6 @@ class Action {
 		https
 			.get(requestOptions, (res) => {
 				let body = "";
-				console.log(requestOptions);
-				console.log(res.statusCode);
 				if (res.statusCode == 404)
 					this._pushPackage(this.version, this.packageName);
 
@@ -191,16 +189,13 @@ class Action {
 					res.on("end", () => {
 						const content = JSON.parse(body);
 
-						console.log("response content json: ", content.data[0].versions);
 						console.log("Searching for version: ", this.version);
 
 						let found = false;
 						content.data.forEach((p) => {
 							if (
 								p.id === this.packageName &&
-								p.versions.some(
-									(v) => v.toString().trim() == this.version.trim()
-								)
+								p.versions.some((v) => v.version.trim() == this.version.trim())
 							) {
 								found = true;
 								console.log("Found matching version!");
