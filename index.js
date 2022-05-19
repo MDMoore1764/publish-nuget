@@ -191,7 +191,10 @@ class Action {
 					res.on("end", () => {
 						const content = JSON.parse(body);
 
-						console.log("response content json: ", content);
+						console.log(
+							"response content json: ",
+							content.flatMap((c) => c.versions)
+						);
 						console.log("Searching for version: ", this.version);
 
 						let found = false;
