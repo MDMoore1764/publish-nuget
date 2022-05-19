@@ -107,6 +107,7 @@ class Action {
 			pushOutput = this._executeCommand(pushCmd, { encoding: "utf-8" }).stdout;
 
 		console.log(pushOutput);
+		console.log("Error:", /error.*/.exec(pushOutput));
 
 		if (/error/.test(pushOutput))
 			this._printErrorAndExit(`${/error.*/.exec(pushOutput)[0]}`);
@@ -191,13 +192,17 @@ class Action {
 					res.on("end", () => {
 						const content = JSON.parse(body);
 
+						console.log("response content json: ", content);
+						console.log("Searching for version: ", this.version);
+
 						let found = false;
 						content.data.forEach((p) => {
 							if (
 								p.title === this.packageName &&
-								p.versions.some((v) => v == this.version)
+								p.versions.some((v) => v?.trim() == this.version.trim())
 							) {
 								found = true;
+								console.log("Found matching version!");
 								return;
 							}
 						});
