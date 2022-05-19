@@ -199,7 +199,7 @@ class Action {
 						content.data.forEach((p) => {
 							if (
 								p.title === this.packageName &&
-								p.versions.some((v) => v?.trim() == this.version.trim())
+								p.versions.some((v) => v == this.version.trim())
 							) {
 								found = true;
 								console.log("Found matching version!");
